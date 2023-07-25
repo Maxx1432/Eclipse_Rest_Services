@@ -26,6 +26,15 @@ public class BrandsDAO {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public BrandEntity getBrand(int brandID) {
+		Session session = factory.getCurrentSession();
+		session.beginTransaction();
+//		BrandEntity brand;
+//		brand = session.get(BrandEntity.class, brandID);
+		return session.get(BrandEntity.class, brandID);
+		
+	}
 
 	public void addBrand(BrandEntity brand) {
 		Session session = factory.getCurrentSession();
@@ -53,5 +62,6 @@ public class BrandsDAO {
 		session.delete(brand);
 		session.getTransaction().commit();
 	}
+
 
 }

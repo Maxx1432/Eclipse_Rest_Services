@@ -1,8 +1,10 @@
 package com.maxx.showroom.resources;
 
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
+
 
 //import javax.ws.rs.Consumes;
 //import javax.ws.rs.DELETE;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import com.maxx.showroom.hibernate.entities.BrandEntity;
 import com.maxx.showroom.services.BrandsService;
+import com.maxx.showroom.services.ProductsService;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
@@ -25,16 +28,19 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 
 
-@Path("/showroom")
+@Path("/showroom/brands")
 public class Brands {
 	
 	BrandsService service = new BrandsService();
+	ProductsService pService = new ProductsService();
 
 	@GET
-	@Path("/brands")
 	@Produces(MediaType.APPLICATION_JSON)
 	//showroom/getBrands
 	public List<BrandEntity> getBrands() {
@@ -43,16 +49,30 @@ public class Brands {
 		return list;
 	}
 	
+	@GET
+	@Path("/{brandId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public BrandEntity getBrand(@PathParam("brandId") int brandID)
+	{
+		return service.getBrand(brandID);
+	}
+	
 	@POST
-	@Path("/brands")
 	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	//showroom/getBrands
-	public void postBrands(BrandEntity brand) {
+	public Response postBrands(BrandEntity brand, @Context UriInfo uri) {
+//		URI location = uri.getAbsolutePath();
 		service.addBrand(brand);
+		//Easy way to build URI patj with ID
+		URI location = uri.getAbsolutePathBuilder().path(Integer.toString(brand.getBrandId())).build();
+//		String resourceURL = uri.getAbsolutePath().toString()+"/"+brand.getBrandId();
+//		URI location = URI.create(resourceURL); 
+		return Response.created(location).entity(brand).build();
 	}
 	
 	@PUT
-	@Path("/brands/{brandId}")
+	@Path("/{brandId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	//showroom/getBrands
 	public void putBrands(@PathParam("brandId") int brandID, BrandEntity updatedBrand) {
@@ -61,10 +81,16 @@ public class Brands {
 	}
 	
 	@DELETE
-	@Path("/brands/{brandId}")
+	@Path("/{brandId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	//showroom/getBrands
 	public void deleteBrands(@PathParam("brandId") int brandID) {
 		service.deleteBrand(brandID);
 	}
+	
+	@Path("/{brandId}/products")
+	 public Products productDelegate() {
+		 return new Products();
+	 }
+	
 }
