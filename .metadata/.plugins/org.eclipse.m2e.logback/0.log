@@ -7159,3 +7159,5 @@ java.io.FileNotFoundException: C:\Eclipse_Rest_Services\.metadata\.plugins\org.e
 2023-07-24 16:53:45,030 [Worker-378: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Eclipse_Rest_Services\Setting Up Services\src\test\resources
 2023-07-24 16:55:11,359 [Worker-387: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
 2023-07-24 16:55:11,359 [Worker-387: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 1 resource
+2023-07-24 16:55:11,361 [Worker-387: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2023-07-24 16:55:11,362 [Worker-387: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Eclipse_Rest_Services\Setting Up Services\src\test\resources
